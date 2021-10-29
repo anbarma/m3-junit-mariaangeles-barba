@@ -28,8 +28,9 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar el contador")
     @Test
     void countTest() {
-        EmployeeRepository employeeRepository;
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
+
         Integer num = service.count();
         assertAll(
                 () -> assertNotNull(num),
@@ -41,7 +42,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar si muestra todos")
     @Test
     void findAllTest() {
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         List<Employee> employees =  service.findAll();
 
         assertNotNull(employees);
@@ -51,7 +53,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar si encuentra el ID=1")
     @Test
     void findOneId1Test() {
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         Employee empID1  = service.findOne(1L);
 
         assertNotNull(empID1);
@@ -62,7 +65,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar que no encuentra smartphone con ID muy grande")
     @Test
     void findOnePhone999Test() {
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         Employee empID99  = service.findOne(999L);
 
         assertNull(empID99);
@@ -71,7 +75,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar captura de excepción al buscar un smartphone nulo")
     @Test
     void findOneExceptionTest() {
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         // verifica si se ha lanzado una excepción
         assertThrows(
                 IllegalArgumentException.class,
@@ -90,7 +95,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar excepción cuando el empleado a guardar es nulo")
     @Test
     void saveNullTest(){
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
 
         assertThrows(
                 IllegalArgumentException.class,
@@ -101,7 +107,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar id negativo, no se debería añadir un empleado")
     @Test
     void saveNegativeIdTest(){
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         Employee empleado = new Employee(-4L, "Empleado desconocido",40);
 
         assertEquals(3, service.count());
@@ -115,7 +122,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar borrado con ID=1")
     @Test
     void deleteOkTest(){
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         boolean result = service.delete(1L);
         assertTrue(result);
     }
@@ -123,7 +131,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar borrado cuando el Smartphone es nulo")
     @Test
     void deleteNullTest(){
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         boolean result = service.delete(null);
         assertFalse(result);
     }
@@ -131,7 +140,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar borrado cuando el la ID no existe")
     @Test
     void deleteNotContainsTest(){
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         boolean result = service.delete(666L);
         assertFalse(result);
     }
@@ -139,7 +149,8 @@ class EmployeeServiceImplTest {
     @DisplayName("Comprobar si borra todos")
     @Test
     void deleteAllTest() {
-        EmployeeRepositoryImpl service = new EmployeeRepositoryImpl();
+        EmployeeRepository repository = new EmployeeRepositoryImpl();
+        EmployeeServiceImpl service = new EmployeeServiceImpl(repository);
         assertTrue(service.count() > 0);
         service.deleteAll();
         assertEquals(0, service.count());
