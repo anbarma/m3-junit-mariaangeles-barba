@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 //@Suite
 @RunWith(JUnitPlatform.class)
 @SuiteDisplayName("JUnit Test")
-@SelectPackages("com.example.demo.service")
+@SelectPackages("com.example.demo")
 //@IncludeClassNamePatterns(".*Test")
 public class SuiteTest {
 }
